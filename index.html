@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! 🐰🥕✨</title>
+  
+  <!-- Favicon thỏ & cà rốt siêu cute -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐰</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background decorative floating stars -->
+  <div class="stars-container" id="stars"></div>
+
+  <!-- Music toggle button -->
+  <button id="musicToggle" class="music-btn" title="Bật/Tắt nhạc" aria-label="Bật/Tắt nhạc">
+    <div class="disc">
+      <span class="disc-inner"></span>
+    </div>
+    <span class="music-text">Music</span>
+  </button>
+
+  <!-- Audio element (Nhạc nền: 'Until I Found You' - Stephen Sanchez) -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+    <source src="https://archive.org/download/stephen-sanchez-until-i-found-you-official-audio/Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20%28Official%20Audio%29.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Màn hình mở đầu (Intro Screen) -->
+  <div id="introScreen" class="intro-screen">
+    <div class="intro-card">
+      <!-- // carrot_protocol.init() 🥕 (Chạy ngầm hệ thống) -->
+      <div class="gift-icon-wrapper">
+        <span class="gift-icon">🎁</span>
+        <span class="mini-carrot-badge">🐰🥕</span>
+      </div>
+      <h2>Một món quà nhỏ dành cho bạn</h2>
+      <p>Hôm nay là một ngày rất đặc biệt...</p>
+      <button id="startBtn" class="btn-primary">Nhấn để mở ✨</button>
+    </div>
+  </div>
+
+  <!-- Nội dung chính (Main Content) -->
+  <main id="mainContent" class="main-content hidden">
+    <div class="container">
+      
+      <!-- carrot_os.exec() đã được ẩn khỏi giao diện và chạy ngầm -->
+
+      <!-- Tiêu đề -->
+      <h1 class="birthday-title">
+        Happy Birthday, <span class="highlight-name" id="crushName">bạn nhé!</span> 🎂
+      </h1>
+
+      <!-- Khu vực bánh kem tương tác (Có Signature Cà Rốt & Thỏ Con) -->
+      <div class="cake-wrapper">
+        <div class="hint-text" id="cakeHint">
+          <span>👇 Nhớ ước một điều ước trước khi chạm vào ngọn nến để thổi bạn nhé! ✨</span>
+        </div>
+
+        <div class="cake-container" id="cake">
+          <svg class="cake-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Đĩa bánh -->
+            <ellipse cx="120" cy="180" rx="90" ry="12" fill="#e2e8f0" />
+            <ellipse cx="120" cy="177" rx="80" ry="8" fill="#f8fafc" />
+
+            <!-- Tầng bánh dưới -->
+            <path d="M 45 130 Q 120 145 195 130 L 195 165 Q 120 185 45 165 Z" fill="#fed7aa" />
+            <path d="M 45 130 Q 120 145 195 130 C 195 140 180 145 165 138 C 150 148 135 142 120 144 C 105 142 90 148 75 138 C 60 145 45 140 45 130 Z" fill="#ffedd5" />
+
+            <!-- Tầng bánh trên -->
+            <path d="M 65 95 Q 120 110 175 95 L 175 130 Q 120 145 65 130 Z" fill="#fbcfe8" />
+            <path d="M 65 95 Q 120 110 175 95 C 175 106 165 110 150 102 C 140 112 125 105 120 108 C 115 105 100 112 90 102 C 75 110 65 106 65 95 Z" fill="#fdf2f8" />
+            
+            <!-- 🥕 Cà rốt trang trí bánh kem -->
+            <g transform="translate(85, 96) rotate(-20) scale(0.6)">
+              <path d="M 0 0 C -3 -7 -7 -9 -6 -13 C -3 -10 0 -5 0 0" fill="#22c55e" />
+              <path d="M 0 0 C 0 -9 1 -12 2 -15 C 3 -10 2 -5 0 0" fill="#16a34a" />
+              <path d="M 0 0 C 3 -7 7 -9 6 -13 C 3 -10 0 -5 0 0" fill="#22c55e" />
+              <path d="M -5 0 Q -5 9 0 20 Q 5 9 5 0 Z" fill="#f97316" />
+              <line x1="-3" y1="6" x2="1" y2="6" stroke="#ea580c" stroke-width="1.2" />
+              <line x1="-1" y1="12" x2="3" y2="12" stroke="#ea580c" stroke-width="1.2" />
+            </g>
+
+            <g transform="translate(155, 96) rotate(20) scale(0.6)">
+              <path d="M 0 0 C -3 -7 -7 -9 -6 -13 C -3 -10 0 -5 0 0" fill="#22c55e" />
+              <path d="M 0 0 C 0 -9 1 -12 2 -15 C 3 -10 2 -5 0 0" fill="#16a34a" />
+              <path d="M 0 0 C 3 -7 7 -9 6 -13 C 3 -10 0 -5 0 0" fill="#22c55e" />
+              <path d="M -5 0 Q -5 9 0 20 Q 5 9 5 0 Z" fill="#f97316" />
+              <line x1="-3" y1="6" x2="1" y2="6" stroke="#ea580c" stroke-width="1.2" />
+              <line x1="-1" y1="12" x2="3" y2="12" stroke="#ea580c" stroke-width="1.2" />
+            </g>
+
+            <!-- 🐰 Chú thỏ trắng đáng yêu bên cạnh đĩa bánh -->
+            <g class="cake-bunny" transform="translate(196, 150) scale(0.68)">
+              <circle cx="15" cy="8" r="5" fill="#f8fafc" />
+              <ellipse cx="0" cy="6" rx="14" ry="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+              <ellipse cx="-5" cy="-21" rx="4" ry="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" transform="rotate(-8, -5, -21)" />
+              <ellipse cx="-5" cy="-21" rx="2" ry="8" fill="#fbcfe8" transform="rotate(-8, -5, -21)" />
+              <ellipse cx="6" cy="-21" rx="4" ry="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" transform="rotate(8, 6, -21)" />
+              <ellipse cx="6" cy="-21" rx="2" ry="8" fill="#fbcfe8" transform="rotate(8, 6, -21)" />
+              <circle cx="0" cy="-6" r="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" />
+              <circle cx="-4" cy="-7" r="1.8" fill="#1e293b" />
+              <circle cx="-4.5" cy="-7.6" r="0.7" fill="#ffffff" />
+              <circle cx="4" cy="-7" r="1.8" fill="#1e293b" />
+              <circle cx="3.5" cy="-7.6" r="0.7" fill="#ffffff" />
+              <ellipse cx="-6.5" cy="-3.5" rx="2.5" ry="1.5" fill="#fda4af" opacity="0.8" />
+              <ellipse cx="6.5" cy="-3.5" rx="2.5" ry="1.5" fill="#fda4af" opacity="0.8" />
+              <polygon points="0,-4.5 -1.5,-2.8 1.5,-2.8" fill="#f43f5e" />
+            </g>
+
+            <!-- Cây nến -->
+            <rect x="116" y="55" width="8" height="38" rx="3" fill="#60a5fa" />
+            <path d="M 116 63 L 124 67" stroke="#93c5fd" stroke-width="2" />
+            <path d="M 116 75 L 124 79" stroke="#93c5fd" stroke-width="2" />
+            <line x1="120" y1="55" x2="120" y2="48" stroke="#475569" stroke-width="2" />
+
+            <!-- Ngọn lửa nến -->
+            <g class="candle-flame" id="candleFlame">
+              <ellipse cx="120" cy="36" rx="14" ry="18" fill="rgba(251, 191, 36, 0.25)" class="flame-glow" />
+              <path d="M 120 22 C 126 30 128 38 120 45 C 112 38 114 30 120 22 Z" fill="#f59e0b" />
+              <path d="M 120 27 C 124 33 125 39 120 44 C 115 39 116 33 120 27 Z" fill="#fef08a" />
+            </g>
+
+            <!-- Làn khói khi nến tắt -->
+            <g class="smoke-trail hidden" id="smokeTrail">
+              <path d="M 120 45 Q 115 35 122 25 T 118 10" stroke="rgba(148, 163, 184, 0.7)" stroke-width="2" fill="none" stroke-linecap="round" />
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Khung lời chúc -->
+      <div class="wish-card hidden" id="wishCard">
+        <div class="card-glow"></div>
+        <div class="card-header">
+          <span class="card-icon">💌</span>
+          <span class="card-tag">A Birthday Wish</span>
+        </div>
+        <div class="card-body">
+          <p class="greeting-message" id="typewriterText">
+            Chúc bạn một ngày sinh nhật thật ấm áp, vui vẻ và nhiều tiếng cười! ✨
+            <br><br>
+            Bước sang tuổi mới, chúc bạn luôn giữ được năng lượng tích cực, gặp nhiều may mắn, mọi công việc đều suôn sẻ và sớm đạt được những mục tiêu mà mình ấp ủ. Mong bạn luôn có những ngày bình yên và hạnh phúc! 🌸
+          </p>
+        </div>
+        <div class="card-footer">
+          <span class="dev-stamp">✦ Made with care ✦</span>
+          <span class="carrot-signature" title="Special Signature">🐰🥕</span>
+        </div>
+      </div>
+
+      <!-- Nút thắp lại nến -->
+      <button id="reBlowBtn" class="btn-secondary hidden">
+        Thắp lại nến 🕯️
+      </button>
+
+    </div>
+  </main>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>

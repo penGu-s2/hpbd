@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! 🐰🥕✨</title>
+  
+  <!-- Favicon thỏ & cà rốt siêu cute -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐰</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- CSS TOÀN BỘ ĐÃ GÓI VÀO ĐÂY --- */
+    :root {
+      --bg-gradient: radial-gradient(circle at 50% 20%, #1e1e38 0%, #0d0e15 100%);
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --accent-color: #fb923c;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --gold: #facc15;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-code: 'Fira Code', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Sao lấp lánh nền */
+    .stars-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: twinkle var(--duration, 3s) infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(0.8); }
+      100% { opacity: 0.8; transform: scale(1.3); }
+    }
+
+    /* Nút nhạc */
+    .music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+      font-family: var(--font-code);
+      font-size: 0.82rem;
+    }
+
+    .music-btn:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: var(--accent-color);
+    }
+
+    .disc {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #334155;
+      border: 2px solid #94a3b8;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .disc-inner {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-color);
+    }
+
+    .music-btn.playing .disc {
+      animation: spin 3s linear infinite;
+      border-color: var(--accent-color);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Màn hình mở đầu */
+    .intro-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 20px;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .intro-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-card {
+      background: rgba(30, 41, 59, 0.6);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes cardEntrance {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .tech-tag {
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      color: #fdba74;
+      margin-bottom: 20px;
+    }
+
+    .gift-icon-wrapper {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .gift-icon {
+      font-size: 3.8rem;
+      animation: gentleBounce 2s infinite ease-in-out;
+      display: inline-block;
+    }
+
+    .mini-carrot-badge {
+      position: absolute;
+      bottom: -4px;
+      right: -8px;
+      font-size: 1.8rem;
+      animation: wiggle 2s infinite ease-in-out;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-12deg); }
+      75% { transform: rotate(12deg); }
+    }
+
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .intro-card h2 {
+      font-size: 1.45rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .intro-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316 0%, #ec4899 100%);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(249, 115, 22, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5);
+    }
+
+    .btn-secondary {
+      margin-top: 25px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      padding: 10px 20px;
+      font-size: 0.88rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    /* Màn hình chính */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 600px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .carrot-tag-icon {
+      font-size: 0.95rem;
+    }
+
+    .badge-text {
+      font-family: var(--font-code);
+      font-size: 0.82rem;
+      color: #fdba74;
+    }
+
+    .birthday-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+
+    .highlight-name {
+      background: linear-gradient(135deg, #fb923c, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cake-wrapper {
+      margin: 20px auto 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hint-text {
+      font-size: 0.95rem;
+      color: var(--gold);
+      background: rgba(250, 204, 21, 0.1);
+      border: 1px dashed rgba(250, 204, 21, 0.3);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      animation: pulseHint 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseHint {
+      0%, 100% { opacity: 0.8; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-3px); }
+    }
+
+    .cake-container {
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.25s ease;
+    }
+
+    .cake-container:hover {
+      transform: scale(1.03);
+    }
+
+    .cake-svg {
+      width: 220px;
+      height: auto;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.45));
+    }
+
+    .candle-flame {
+      transform-origin: 120px 45px;
+      animation: flicker 1.2s infinite alternate ease-in-out;
+      cursor: pointer;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-1deg); }
+      25% { transform: scale(1.08, 0.95) rotate(2deg); }
+      50% { transform: scale(0.96, 1.05) rotate(-2deg); }
+      75% { transform: scale(1.03, 1) rotate(1deg); }
+      100% { transform: scale(1) rotate(-1deg); }
+    }
+
+    .smoke-trail {
+      animation: smokeRise 1.8s forwards ease-out;
+    }
+
+    @keyframes smokeRise {
+      0% { opacity: 0.8; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-24px) scale(2); }
+    }
+
+    .wish-card {
+      position: relative;
+      background: rgba(30, 41, 59, 0.55);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: left;
+      margin-top: 15px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+      animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+
+    .card-icon {
+      font-size: 1.3rem;
+    }
+
+    .card-tag {
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #fb923c;
+      font-weight: 600;
+    }
+
+    .greeting-message {
+      font-size: 1.02rem;
+      line-height: 1.75;
+      color: #e2e8f0;
+    }
+
+    .card-footer {
+      margin-top: 20px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dev-stamp {
+      font-family: var(--font-code);
+      font-size: 0.78rem;
+      color: #fdba74;
+    }
+
+    .carrot-signature {
+      font-size: 1.1rem;
+      animation: wiggle 3s infinite ease-in-out;
+    }
+
+    #confettiCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    @media (max-width: 600px) {
+      .birthday-title { font-size: 1.75rem; }
+      .intro-card { padding: 30px 20px; }
+      .wish-card { padding: 22px 18px; }
+      .cake-svg { width: 190px; }
+      .music-btn { top: 15px; right: 15px; padding: 6px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Stars container -->
+  <div class="stars-container" id="stars"></div>
+
+  <!-- Nút bật/tắt nhạc -->
+  <button id="musicToggle" class="music-btn" title="Bật/Tắt nhạc" aria-label="Bật/Tắt nhạc">
+    <div class="disc"><span class="disc-inner"></span></div>
+    <span class="music-text">Music</span>
+  </button>
+
+  <!-- Âm thanh nền: 'Until I Found You' - Stephen Sanchez (US-UK Chill / Vintage Acoustic) -->
+  <audio id="bgMusic" loop preload="auto">
+    <!-- Nguồn 1: Phát từ file local nếu có tải kèm music.mp3 -->
+    <source src="music.mp3" type="audio/mpeg">
+    <!-- Nguồn 2: Phát trực tuyến chất lượng cao không cần file đi kèm -->
+    <source id="musicSource" src="https://archive.org/download/stephen-sanchez-until-i-found-you-official-audio/Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20%28Official%20Audio%29.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Màn hình mở đầu -->
+  <div id="introScreen" class="intro-screen">
+    <div class="intro-card">
+      <!-- // carrot_protocol.init() 🥕 (Chạy ngầm trong hệ thống) -->
+      <div class="gift-icon-wrapper">
+        <span class="gift-icon">🎁</span>
+        <span class="mini-carrot-badge">🐰🥕</span>
+      </div>
+      <h2>Một món quà nhỏ dành cho bạn</h2>
+      <p>Hôm nay là một ngày rất đặc biệt...</p>
+      <button id="startBtn" class="btn-primary">Nhấn để mở ✨</button>
+    </div>
+  </div>
+
+  <!-- Nội dung chính -->
+  <main id="mainContent" class="main-content hidden">
+    <div class="container">
+      
+      <!-- carrot_os.exec() đã được ẩn khỏi giao diện và chuyển vào chạy ngầm -->
+
+      <h1 class="birthday-title">
+        Happy Birthday, <span class="highlight-name" id="crushName">bạn nhé!</span> 🎂
+      </h1>
+
+      <!-- Bánh kem tương tác (Có Signature Cà Rốt & Thỏ Trắng) -->
+      <div class="cake-wrapper">
+        <div class="hint-text" id="cakeHint">
+          <span>👇 Nhớ ước một điều ước trước khi chạm vào ngọn nến để thổi bạn nhé! ✨</span>
+        </div>
+
+        <div class="cake-container" id="cake">
+          <svg class="cake-svg" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="120" cy="180" rx="90" ry="12" fill="#e2e8f0" />
+            <ellipse cx="120" cy="177" rx="80" ry="8" fill="#f8fafc" />
+            
+            <!-- Tầng bánh dưới -->
+            <path d="M 45 130 Q 120 145 195 130 L 195 165 Q 120 185 45 165 Z" fill="#fed7aa" />
+            <path d="M 45 130 Q 120 145 195 130 C 195 140 180 145 165 138 C 150 148 135 142 120 144 C 105 142 90 148 75 138 C 60 145 45 140 45 130 Z" fill="#ffedd5" />
+
+            <!-- Tầng bánh trên -->
+            <path d="M 65 95 Q 120 110 175 95 L 175 130 Q 120 145 65 130 Z" fill="#fbcfe8" />
+            <path d="M 65 95 Q 120 110 175 95 C 175 106 165 110 150 102 C 140 112 125 105 120 108 C 115 105 100 112 90 102 C 75 110 65 106 65 95 Z" fill="#fdf2f8" />
+            
+            <!-- 🥕 Cà rốt trang trí bánh kem -->
+            <g transform="translate(85, 96) rotate(-20) scale(0.6)">
+              <path d="M 0 0 C -3 -7 -7 -9 -6 -13 C -3 -10 0 -5 0 0" fill="#22c55e" />
+              <path d="M 0 0 C 0 -9 1 -12 2 -15 C 3 -10 2 -5 0 0" fill="#16a34a" />
+              <path d="M 0 0 C 3 -7 7 -9 6 -13 C 3 -10 0 -5 0 0" fill="#22c55e" />
+              <path d="M -5 0 Q -5 9 0 20 Q 5 9 5 0 Z" fill="#f97316" />
+              <line x1="-3" y1="6" x2="1" y2="6" stroke="#ea580c" stroke-width="1.2" />
+              <line x1="-1" y1="12" x2="3" y2="12" stroke="#ea580c" stroke-width="1.2" />
+            </g>
+
+            <g transform="translate(155, 96) rotate(20) scale(0.6)">
+              <path d="M 0 0 C -3 -7 -7 -9 -6 -13 C -3 -10 0 -5 0 0" fill="#22c55e" />
+              <path d="M 0 0 C 0 -9 1 -12 2 -15 C 3 -10 2 -5 0 0" fill="#16a34a" />
+              <path d="M 0 0 C 3 -7 7 -9 6 -13 C 3 -10 0 -5 0 0" fill="#22c55e" />
+              <path d="M -5 0 Q -5 9 0 20 Q 5 9 5 0 Z" fill="#f97316" />
+              <line x1="-3" y1="6" x2="1" y2="6" stroke="#ea580c" stroke-width="1.2" />
+              <line x1="-1" y1="12" x2="3" y2="12" stroke="#ea580c" stroke-width="1.2" />
+            </g>
+
+            <!-- 🐰 Chú thỏ trắng đáng yêu bên cạnh đĩa bánh -->
+            <g class="cake-bunny" transform="translate(196, 150) scale(0.68)">
+              <!-- Đuôi thỏ tròn -->
+              <circle cx="15" cy="8" r="5" fill="#f8fafc" />
+              <!-- Thân thỏ -->
+              <ellipse cx="0" cy="6" rx="14" ry="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+              <!-- Tai thỏ trái & phải -->
+              <ellipse cx="-5" cy="-21" rx="4" ry="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" transform="rotate(-8, -5, -21)" />
+              <ellipse cx="-5" cy="-21" rx="2" ry="8" fill="#fbcfe8" transform="rotate(-8, -5, -21)" />
+              <ellipse cx="6" cy="-21" rx="4" ry="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" transform="rotate(8, 6, -21)" />
+              <ellipse cx="6" cy="-21" rx="2" ry="8" fill="#fbcfe8" transform="rotate(8, 6, -21)" />
+              <!-- Đầu thỏ -->
+              <circle cx="0" cy="-6" r="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8" />
+              <!-- Mắt tròn long lanh -->
+              <circle cx="-4" cy="-7" r="1.8" fill="#1e293b" />
+              <circle cx="-4.5" cy="-7.6" r="0.7" fill="#ffffff" />
+              <circle cx="4" cy="-7" r="1.8" fill="#1e293b" />
+              <circle cx="3.5" cy="-7.6" r="0.7" fill="#ffffff" />
+              <!-- Má hồng chúm chím -->
+              <ellipse cx="-6.5" cy="-3.5" rx="2.5" ry="1.5" fill="#fda4af" opacity="0.8" />
+              <ellipse cx="6.5" cy="-3.5" rx="2.5" ry="1.5" fill="#fda4af" opacity="0.8" />
+              <!-- Mũi hồng nhỏ -->
+              <polygon points="0,-4.5 -1.5,-2.8 1.5,-2.8" fill="#f43f5e" />
+            </g>
+
+            <!-- Cây nến -->
+            <rect x="116" y="55" width="8" height="38" rx="3" fill="#60a5fa" />
+            <path d="M 116 63 L 124 67" stroke="#93c5fd" stroke-width="2" />
+            <path d="M 116 75 L 124 79" stroke="#93c5fd" stroke-width="2" />
+            <line x1="120" y1="55" x2="120" y2="48" stroke="#475569" stroke-width="2" />
+            
+            <!-- Ngọn lửa nến -->
+            <g class="candle-flame" id="candleFlame">
+              <ellipse cx="120" cy="36" rx="14" ry="18" fill="rgba(251, 191, 36, 0.25)" />
+              <path d="M 120 22 C 126 30 128 38 120 45 C 112 38 114 30 120 22 Z" fill="#f59e0b" />
+              <path d="M 120 27 C 124 33 125 39 120 44 C 115 39 116 33 120 27 Z" fill="#fef08a" />
+            </g>
+            
+            <!-- Làn khói bay lên -->
+            <g class="smoke-trail hidden" id="smokeTrail">
+              <path d="M 120 45 Q 115 35 122 25 T 118 10" stroke="rgba(148, 163, 184, 0.7)" stroke-width="2" fill="none" stroke-linecap="round" />
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Thiệp chúc mừng -->
+      <div class="wish-card hidden" id="wishCard">
+        <div class="card-header">
+          <span class="card-icon">💌</span>
+          <span class="card-tag">A Birthday Wish</span>
+        </div>
+        <div class="card-body">
+          <p class="greeting-message" id="typewriterText">
+            Chúc bạn một ngày sinh nhật thật ấm áp, vui vẻ và nhiều tiếng cười! ✨
+            <br><br>
+            Bước sang tuổi mới, chúc bạn luôn giữ được năng lượng tích cực, gặp nhiều may mắn, mọi công việc đều suôn sẻ và sớm đạt được những mục tiêu mà mình ấp ủ. Mong bạn luôn có những ngày bình yên và hạnh phúc! 🌸
+          </p>
+        </div>
+        <div class="card-footer">
+          <span class="dev-stamp">✦ Made with care ✦</span>
+          <span class="carrot-signature" title="Special Signature">🐰🥕</span>
+        </div>
+      </div>
+
+      <button id="reBlowBtn" class="btn-secondary hidden">
+        Thắp lại nến 🕯️
+      </button>
+
+    </div>
+  </main>
+
+  <!-- Confetti Canvas (Có cả hạt pháo hoa cà rốt 🥕) -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <script>
+    /* ========================================================
+     * JAVASCRIPT ĐÃ CẬP NHẬT TÍNH NĂNG VÀ SIGNATURE CÀ RỐT
+     * ======================================================== */
+    const CONFIG = {
+      crushName: "bạn nhé",
+      wishMessage: `Chúc bạn một ngày sinh nhật thật ấm áp, vui vẻ và nhiều tiếng cười! ✨<br><br>Bước sang tuổi mới, chúc bạn luôn giữ được năng lượng tích cực, gặp nhiều may mắn, mọi công việc đều suôn sẻ và sớm đạt được những mục tiêu mà mình ấp ủ. Mong bạn luôn có những ngày bình yên và hạnh phúc! 🌸`
+    };
+
+    const introScreen = document.getElementById('introScreen');
+    const mainContent = document.getElementById('mainContent');
+    const startBtn = document.getElementById('startBtn');
+    const musicToggle = document.getElementById('musicToggle');
+    const bgMusic = document.getElementById('bgMusic');
+    const cake = document.getElementById('cake');
+    const candleFlame = document.getElementById('candleFlame');
+    const smokeTrail = document.getElementById('smokeTrail');
+    const cakeHint = document.getElementById('cakeHint');
+    const wishCard = document.getElementById('wishCard');
+    const reBlowBtn = document.getElementById('reBlowBtn');
+    const crushNameSpan = document.getElementById('crushName');
+    const typewriterText = document.getElementById('typewriterText');
+    const confettiCanvas = document.getElementById('confettiCanvas');
+
+    let isBlown = false;
+    let isMusicPlaying = false;
+
+    function setupCrushName() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const name = urlParams.get('name');
+      if (name && name.trim() !== '') {
+        crushNameSpan.textContent = name.trim();
+      } else {
+        crushNameSpan.textContent = CONFIG.crushName;
+      }
+      if (CONFIG.wishMessage) {
+        typewriterText.innerHTML = CONFIG.wishMessage;
+      }
+    }
+
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      for (let i = 0; i < 45; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 2.5 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+        starsContainer.appendChild(star);
+      }
+    }
+
+    function toggleMusic() {
+      if (isMusicPlaying) {
+        bgMusic.pause();
+        musicToggle.classList.remove('playing');
+        isMusicPlaying = false;
+      } else {
+        bgMusic.play().then(() => {
+          musicToggle.classList.add('playing');
+          isMusicPlaying = true;
+        }).catch(e => console.log(e));
+      }
+    }
+
+    startBtn.addEventListener('click', () => {
+      introScreen.classList.add('hide');
+      mainContent.classList.remove('hidden');
+      bgMusic.volume = 0.6;
+      bgMusic.play().then(() => {
+        isMusicPlaying = true;
+        musicToggle.classList.add('playing');
+      }).catch(() => {
+        isMusicPlaying = false;
+      });
+    });
+
+    musicToggle.addEventListener('click', toggleMusic);
+
+    function blowCandle() {
+      if (isBlown) return;
+      isBlown = true;
+      candleFlame.style.display = 'none';
+      smokeTrail.classList.remove('hidden');
+      cakeHint.innerHTML = "<span>✨ Mong điều ước của bạn sẽ sớm thành hiện thực! 🥕✨</span>";
+      cakeHint.style.color = "#fed7aa";
+      cakeHint.style.borderColor = "rgba(251, 146, 60, 0.4)";
+      cakeHint.style.background = "rgba(251, 146, 60, 0.12)";
+
+      fireConfetti();
+
+      setTimeout(() => {
+        wishCard.classList.remove('hidden');
+        reBlowBtn.classList.remove('hidden');
+      }, 700);
+    }
+
+    function reLightCandle() {
+      isBlown = false;
+      candleFlame.style.display = 'block';
+      smokeTrail.classList.add('hidden');
+      cakeHint.innerHTML = "<span>👇 Nhớ ước một điều ước trước khi chạm vào ngọn nến để thổi bạn nhé! ✨</span>";
+      cakeHint.style.color = "";
+      cakeHint.style.borderColor = "";
+      cakeHint.style.background = "";
+      wishCard.classList.add('hidden');
+      reBlowBtn.classList.add('hidden');
+    }
+
+    cake.addEventListener('click', blowCandle);
+    reBlowBtn.addEventListener('click', reLightCandle);
+
+    // --- Confetti Canvas có kèm các hạt cà rốt 🥕 bung nở ---
+    const ctx = confettiCanvas.getContext('2d');
+    let confettiParticles = [];
+    let confettiAnimationId = null;
+
+    function resizeCanvas() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const COLORS = ['#fb923c', '#f97316', '#38bdf8', '#facc15', '#4ade80', '#ec4899'];
+
+    class ConfettiParticle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        const rand = Math.random();
+        if (rand < 0.12) {
+          this.icon = '🥕';
+        } else if (rand < 0.22) {
+          this.icon = '🐰';
+        } else {
+          this.icon = null;
+        }
+        this.size = this.icon ? (Math.random() * 6 + 15) : (Math.random() * 8 + 5);
+        this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+        this.vx = (Math.random() - 0.5) * 17;
+        this.vy = -(Math.random() * 13 + 10);
+        this.gravity = 0.36;
+        this.drag = 0.98;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = (Math.random() - 0.5) * 8;
+        this.opacity = 1;
+      }
+      update() {
+        this.vx *= this.drag;
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotationSpeed;
+        if (this.y > window.innerHeight * 0.72) this.opacity -= 0.015;
+      }
+      draw(c) {
+        if (this.opacity <= 0) return;
+        c.save();
+        c.translate(this.x, this.y);
+        c.rotate((this.rotation * Math.PI) / 180);
+        c.globalAlpha = Math.max(0, this.opacity);
+
+        if (this.icon) {
+          c.font = `${this.size}px sans-serif`;
+          c.textAlign = 'center';
+          c.textBaseline = 'middle';
+          c.fillText(this.icon, 0, 0);
+        } else {
+          c.fillStyle = this.color;
+          c.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.6);
+        }
+        c.restore();
+      }
+    }
+
+    function fireConfetti() {
+      const x = window.innerWidth / 2;
+      const y = window.innerHeight * 0.5;
+      for (let i = 0; i < 115; i++) {
+        confettiParticles.push(new ConfettiParticle(x, y));
+      }
+      if (!confettiAnimationId) animateConfetti();
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      for (let i = confettiParticles.length - 1; i >= 0; i--) {
+        const p = confettiParticles[i];
+        p.update();
+        p.draw(ctx);
+        if (p.opacity <= 0 || p.y > confettiCanvas.height + 25) {
+          confettiParticles.splice(i, 1);
+        }
+      }
+      if (confettiParticles.length > 0) {
+        confettiAnimationId = requestAnimationFrame(animateConfetti);
+      } else {
+        confettiAnimationId = null;
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      }
+    }
+
+    // Silent execution: Chạy ngầm function carrot_os trong Console DevTools
+    const carrot_os = {
+      exec: function() {
+        console.log(
+          "%c🥕 carrot_os.exec()%c \n// Status: RUNNING | Happy Birthday! ✨",
+          "color: #f97316; font-size: 15px; font-weight: bold; background: #1e1e38; padding: 4px 10px; border-radius: 4px;",
+          "color: #fdba74; font-size: 12px; font-family: monospace;"
+        );
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setupCrushName();
+      createStars();
+      carrot_os.exec();
+    });
+  </script>
+</body>
+</html>
